@@ -1,0 +1,8 @@
+{
+  "layout": "layouts/work.njk",
+  "permalink": "works/{{ title | slug }}/index.html",
+  "author": "Anonymous",
+  "tags": [
+    "work"
+  ]
+}

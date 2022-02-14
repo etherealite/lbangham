@@ -3,4 +3,7 @@ layout: layouts/base.njk
 section: home
 ---
 
-{{ layoutContent | safe }}
+{# {{ layoutContent | safe }} #}
+
+{# {% set workslist = collections.work %} #}
+{% include "components/workslist.njk" %}

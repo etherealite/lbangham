@@ -5,12 +5,12 @@
   <title>{{ title or metadata.title }}</title>
   <meta name="description" content="{{ metaDescription or eleventyComputed.metaDescription or metadata.description }}">
   {% set css %}
+    {% include "assets/css/reset.css" %}
     {% include "assets/css/inline.css" %}
   {% endset %}
-  <style>{{ css | cssmin | safe }}</style>
-  {# Uncomment below if you want to include minified inline JavaScript #}
-  {# {% set js %}
+  <style>{{ css  | safe }}</style>
+  {% set js %}
     {% include "assets/js/inline.js" %}
   {% endset %}
-  <script>{{ js | jsmin | safe }}</script> #}
+  <script>{{ js | safe }}</script>
 </head>

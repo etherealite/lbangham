@@ -1,0 +1,8 @@
+<section class="worklist">
+	{% for work in collections.worksCustomSort %}
+
+		<article{% if work.url == url %} data-current="current item"{% endif %}>
+				{% image "." + work.data.image, work.data.title, "300" %}
+		</article>
+	{% endfor %}
+</section>

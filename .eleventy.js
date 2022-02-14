@@ -1,10 +1,35 @@
 const { DateTime } = require("luxon");
 const CleanCSS = require("clean-css");
 const UglifyJS = require("uglify-js");
-const htmlmin = require("html-minifier");
+const Image = require("@11ty/eleventy-img");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 
 module.exports = function(eleventyConfig) {
+
+  // Eleventy Image https://www.11ty.dev/docs/plugins/image/
+  async function imageShortcode(src, alt, sizes) {
+    let metadata = await Image(src, {
+      widths: [400, null],
+      urlPath: "/static/img/",
+      outputDir: "_site/static/img"
+    });
+
+    let imageAttributes = {
+      alt,
+      sizes,
+      loading: "eager",
+      decoding: "async",
+    };
+
+    // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
+    return Image.generateHTML(metadata, imageAttributes);
+  }
+  
+  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+  eleventyConfig.addLiquidShortcode("image", imageShortcode);
+  eleventyConfig.addJavaScriptFunction("image", imageShortcode);
+
+
 
   // Eleventy Navigation https://www.11ty.dev/docs/plugins/navigation/
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
@@ -37,6 +62,15 @@ module.exports = function(eleventyConfig) {
     }, {});
   });
 
+
+	eleventyConfig.addCollection("worksCustomSort", function (collectionApi) {
+		// return collectionApi.getFilteredByGlob("works/*.md").reverse();
+    return collectionApi.getFilteredByGlob("works/*.md").sort((a, b) => {
+      return b.data.date - a.data.date
+    });
+	});
+
+
   // Date formatting (human readable)
   eleventyConfig.addFilter("readableDate", dateObj => {
     return DateTime.fromJSDate(dateObj).toFormat("dd LLL yyyy");
@@ -62,18 +96,6 @@ module.exports = function(eleventyConfig) {
     return minified.code;
   });
 
-  // Minify HTML output
-  eleventyConfig.addTransform("htmlmin", function(content, outputPath) {
-    if (outputPath.indexOf(".html") > -1) {
-      let minified = htmlmin.minify(content, {
-        useShortDoctype: true,
-        removeComments: true,
-        collapseWhitespace: true
-      });
-      return minified;
-    }
-    return content;
-  });
 
   // Don't process folders with static assets e.g. images
   eleventyConfig.addPassthroughCopy("favicon.ico");
@@ -81,6 +103,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("admin/");
   // We additionally output a copy of our CSS for use in Decap CMS previews
   eleventyConfig.addPassthroughCopy("_includes/assets/css/inline.css");
+
+  eleventyConfig.addPassthroughCopy("_includes/assets/fonts");
+
 
   /* Markdown Plugins */
   let markdownIt = require("markdown-it");
@@ -96,6 +121,19 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.setLibrary("md", markdownIt(options)
     .use(markdownItAnchor, opts)
   );
+
+  eleventyConfig.setServerOptions({
+    middleware: [
+      function(_, res, next) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        next()
+      }
+    ],
+    // The starting port number
+    // Will increment up to (configurable) 10 times if a port is already in use.
+    port: 8080,
+  });
+
 
   return {
     templateFormats: ["md", "njk", "liquid"],
