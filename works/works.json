@@ -1,0 +1,6 @@
+{
+    "permalink": "works/{{ title | slug }}/index.html",
+    "tags": [
+        "work"
+    ]
+}
