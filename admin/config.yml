@@ -8,8 +8,12 @@ backend:
 # Uncomment below to enable drafts https://www.decapcms.org/docs/add-to-your-site/#editorial-workflow
 # publish_mode: editorial_workflow
 
+
 # Uncomment below to enable a link to your published site in the header bar of Decap CMS
 # site_url: https://eleventy-netlify-boilerplate.netlify.app/
+# when using the default proxy server port
+local_backend: true
+
 
 media_folder: "static/img" # Media files will be stored in the repo under images/uploads
 
@@ -44,3 +48,12 @@ collections:
           - { label: "Key", name: "key", widget: "string" }
           - { label: "Order", name: "order", widget: "number", default: 0 }
       - { label: "Body", name: "body", widget: "markdown" }
+  - name: "works"
+    label: "Work"
+    folder: "works"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Image", name: "image", widget: "image" }

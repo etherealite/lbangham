@@ -1,7 +1,7 @@
 :root {
-	--primary: blue;
-	--secondary: white;
-	--background: #FFF0EB;
+	--primary: #d8b642;
+	--secondary: #353131;
+	--background: #353131;
 }
 
 *, *:before, *:after {
@@ -81,10 +81,18 @@ pre {
 /* Header Logo (style as h2) */
 header > em {
 	display: block;
-	font-size: 2em;
+	font-size: 1em;
 	margin: .67em 0;
-	font-weight: bold;
 	font-style: normal;
+	letter-spacing: .5em;
+    font-weight: normal;
+    text-decoration: none;
+	font-family: Copperplate-Light;
+}
+
+header em super {
+	font-size: 1.5em;
+	font-family: Copperplate;
 }
 
 /* Header Nav */
