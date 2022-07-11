@@ -1,8 +1,8 @@
-<section>
+<section class="worklist">
 	{% for work in collections.work | reverse %}
 
 		<article{% if work.url == url %} data-current="current item"{% endif %}>
-				{% image "." + work.data.image, work.data.title, "(min-width: 30em) 50vw, 100vw" %}
+				{% image "." + work.data.image, work.data.title, "300" %}
 		</article>
 	{% endfor %}
 </section>

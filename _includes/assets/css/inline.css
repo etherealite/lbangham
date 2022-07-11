@@ -2,6 +2,18 @@
 	--primary: #d8b642;
 	--secondary: #353131;
 	--background: #353131;
+	--header-height: 3.125em;
+	--minimap-factor: calc(1 / 9);
+
+}
+
+@font-face {
+	font-family: Copperplate;
+	src: url('_includes/assets/fonts/Copperplate.woff2') format('woff2')
+}
+@font-face {
+	font-family: Copperplate-Light;
+	src: url('_includes/assets/fonts/Copperplate-Light.woff2') format('woff2')
 }
 
 *, *:before, *:after {
@@ -11,20 +23,24 @@
 html,
 body {
 	padding: 0;
+	width: 100%;
 	margin: 0;
 	font-family: "Avenir", "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
+html {
+	scroll-snap-type: y proximity;
+	scroll-padding-top: var(--header-height);
+}
+
 body {
 	display: grid;
-	height: 100vh;
+	width:100%;
+	min-height: 100vh;
 	grid-template-rows: auto 1fr auto;
 	background-color: var(--background);
 }
 
-main {
-	max-width: 37.5em;
-}
 
 p,
 pre,
@@ -41,20 +57,17 @@ a[href]:not(:hover) {
 	text-decoration: none;
 }
 
-img {
-	max-width: 100%;
-	height: auto;
+
+
+header { 
+	background-color: var(--background);
+	padding-bottom: 0;
+	position: sticky;
+	top: 0;
+	height: var(--header-height);
+	z-index: 100;
 }
 
-header,
-main,
-footer {
-	padding: 1em;
-}
-
-main {
-	padding-bottom: 2em;
-}
 
 main :first-child,
 main > article :first-child {
@@ -79,20 +92,25 @@ pre {
 }
 
 /* Header Logo (style as h2) */
-header > em {
+header em {
 	display: block;
-	font-size: 1em;
-	margin: .67em 0;
+	font-family: Copperplate-light;
+	font-size: 19.2px;
+	/* font-weight: 800; */
 	font-style: normal;
-	letter-spacing: .5em;
+	letter-spacing: 9.6px;
     font-weight: normal;
     text-decoration: none;
-	font-family: Copperplate-Light;
+	margin: 0;
+	padding-top: .5em;
+	padding-left: 3%;
+	padding-bottom: .8em;
 }
 
-header em super {
-	font-size: 1.5em;
+header em .super {
+	font-size: 125%;
 	font-family: Copperplate;
+	/* font-weight: bold; */
 }
 
 /* Header Nav */
@@ -131,10 +149,9 @@ article {
 	border-bottom: 1px solid var(--secondary);
 }
 
-main > section > article > * {
-	margin-top: 0;
-	margin-bottom: .5em;
-}
+
+
+
 
 /* Post Tags */
 a[rel="tag"],
@@ -197,8 +214,115 @@ button {
 	cursor: pointer;
 }
 
+.worklist {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-top: var(--header-height);
+	width: 100%;
+}
+
+.worklist article {
+	align-items: center;
+	/* justify-content: center; */
+	border-bottom: 0;
+	display: flex;
+	height: calc((100vh - var(--header-height)));
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+
+}
+
+
+.worklist article picture {
+	height: 100%;
+	width: 100%;
+}
+
+
+.worklist article picture img {
+	display: block;
+	object-fit: scale-down;
+	/* margin: 0 1em 12% 1em; */
+	/* margin: 0; */
+	height: 90%;
+	/* height: 100%; */
+	scroll-snap-align: center;
+
+}
+
+.minimap {
+	left: calc(5vw / 2);
+
+	position: fixed;
+	top: calc(var(--header-height) + 5vh);
+	height: calc(100vh - var(--header-height) - 15.7vh);
+	/* --minimap-header-height: var(var(--header-height) * var(var(--minimap-factor))); */
+}
+
+.minimap-backdrop {
+	background-color: black;
+	height: 100%;
+	filter: blur(1px);
+	position: absolute;
+	opacity: .25;
+	top: 0;
+	width: 100%;
+	z-index: -1;
+
+}
+
+.minimap-viewpane {
+	width: 100%;
+	height: 100%;
+	overflow-y: hidden;
+}
+
+.minimap-slider {
+	height: calc(100vh * var(--minimap-factor));
+	position: absolute;
+	opacity: .8;
+	top: 0;
+	width: 100%;
+	border:solid 2px var(--primary);
+	z-index: 10;
+}
+
+.minimap-content {
+	position: relative;
+}
+
+.minimap .work-frame {
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	width: calc(100vw * var(--minimap-factor));
+	height: calc(100vh * var(--minimap-factor));
+}
+
+.minimap img {
+	height: 80%;
+	object-fit: scale-down;
+}
+
 @media screen and (min-width:768px) {
 	:root {
 		font-size: 1.1rem;
 	}
 }
+
+/* @media screen and (aspect-ratio: 10/7) {
+	html {
+		scroll-snap-type: X proximity;
+	}
+	body {
+		width: auto;
+	}
+	.worklist {
+	  flex-direction: row;
+	}
+	.worklist article {
+		width: 100vw;
+	}
+  } */
