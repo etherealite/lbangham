@@ -9,7 +9,7 @@ module.exports = function(eleventyConfig) {
   // Eleventy Image https://www.11ty.dev/docs/plugins/image/
   async function imageShortcode(src, alt, sizes) {
     let metadata = await Image(src, {
-      widths: [300, null],
+      widths: [400, null],
       urlPath: "./static/img/",
       outputDir: "./_site/static/img"
     });
@@ -17,7 +17,7 @@ module.exports = function(eleventyConfig) {
     let imageAttributes = {
       alt,
       sizes,
-      loading: "lazy",
+      loading: "eager",
       decoding: "async",
     };
 
@@ -94,6 +94,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("admin/");
   // We additionally output a copy of our CSS for use in Decap CMS previews
   eleventyConfig.addPassthroughCopy("_includes/assets/css/inline.css");
+
 
   /* Markdown Plugins */
   let markdownIt = require("markdown-it");
