@@ -102,7 +102,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("static/img");
   eleventyConfig.addPassthroughCopy("admin/");
   // We additionally output a copy of our CSS for use in Decap CMS previews
-  eleventyConfig.addPassthroughCopy("_includes/assets/css/inline.css");
+  eleventyConfig.addPassthroughCopy("_includes/assets/css/reset.css");
+  eleventyConfig.addPassthroughCopy("_includes/assets/css/styles.css");
+  eleventyConfig.addPassthroughCopy("_includes/assets/js/home.js");
 
   eleventyConfig.addPassthroughCopy("_includes/assets/fonts");
 

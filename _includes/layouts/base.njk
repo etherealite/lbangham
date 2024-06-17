@@ -1,7 +1,11 @@
 <!doctype html>
 <html {% if section %} data-current="{{ section }}"{% endif %} lang="en">
 
-	{% include "components/head.njk" %}
+	{%- block head %}
+
+		{% include "components/head.njk" %}
+	
+	{% endblock %}
 
 	<body>
 
@@ -22,5 +26,4 @@
 		{% include "components/footer.njk" %}
 
 	</body>
-
 </html>

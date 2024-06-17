@@ -69,5 +69,3 @@ collections:
     # view_groups: [ { label: "Priority Groups", field: "sort-priority" } ]
     summary: "{{title}} [Sorted By: {{year}}-{{month}}-{{day}}
      {{hour}}:{{minute}}:{{second}}]"
-
-    # 2024-06-15T12:28:35.264Z
